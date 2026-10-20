@@ -121,7 +121,8 @@ def cmd_open(ctx, a):
         ui.dim(msg)
         return 0
     ui.err("Não foi possível abrir: %s" % ui.clean(msg))
-    ui.dim("Dica: no Android 10+ o Termux precisa da permissão 'Exibir sobre outros apps'.")
+    ui.dim("Dica: se disser 'unable to resolve Intent', o Android escondeu o app do Termux (visibilidade de pacotes).")
+    ui.dim("Cadastre com a activity: add <pacote> --activity <Classe>  (veja 'help add').")
     return 1
 
 
@@ -382,7 +383,6 @@ def cmd_doctor(ctx, a):
     termux = is_termux()
     check(termux, "Rodando no Termux", "fora do Termux o ArcOS não consegue abrir apps", fatal=False)
     check(apps.have("am"), "Comando 'am' (abrir apps)", "instale: pkg install termux-tools", fatal=termux)
-    check(apps.have("monkey"), "Comando 'monkey' (plano B)", "opcional", fatal=False)
     check(apps.have("pm"), "Comando 'pm' (para o 'scan')", "opcional; sem ele use 'add'", fatal=False)
     try:
         mode = home().stat().st_mode & 0o077
