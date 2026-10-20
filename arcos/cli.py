@@ -487,7 +487,11 @@ def dispatch(ctx, argv):
     if name in PROTECTED and not need_auth(ctx):
         ctx.log.log(text, False, "auth")
         return 1
-    rc = args.func(ctx, args) or 0
+    try:
+        rc = args.func(ctx, args) or 0
+    except Exception as e:  # um erro num comando nunca deve derrubar o shell
+        ui.err("Erro inesperado em '%s': %s: %s" % (name, type(e).__name__, e))
+        rc = 1
     if name not in NO_LOG:
         ctx.log.log(text, rc == 0)
     return rc
