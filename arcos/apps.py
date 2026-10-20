@@ -74,7 +74,7 @@ def launch(app):
         "am launcher",
         ["am", "start", "--user", "0", "-a", "android.intent.action.MAIN", "-c", LAUNCHER, "-p", pkg],
     ))
-    attempts.append(("monkey", ["monkey", "-p", pkg, "-c", LAUNCHER, "1"]))
+    # (monkey foi removido: o Android bloqueia fora do ADB)
 
     last = "nenhum método disponível (am/monkey não encontrados)"
     errors = []
